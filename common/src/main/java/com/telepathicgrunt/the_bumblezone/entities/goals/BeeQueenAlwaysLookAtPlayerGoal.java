@@ -68,7 +68,7 @@ public class BeeQueenAlwaysLookAtPlayerGoal extends Goal {
     public void tick() {
         if (this.lookAt != null && this.lookAt.isAlive()) {
             double y = this.onlyHorizontal ? this.mob.getEyeY() : this.lookAt.getEyeY();
-            this.mob.getLookControl().setLookAt(this.lookAt.getX(), y, this.lookAt.getZ(), 0.05f, 0.05f);
+            this.mob.getLookControl().setLookAt(this.lookAt.getX(), y, this.lookAt.getZ(), 0.5f, 0.05f);
         }
     }
 }

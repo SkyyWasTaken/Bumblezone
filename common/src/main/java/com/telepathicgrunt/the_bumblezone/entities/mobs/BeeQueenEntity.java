@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.entities.controllers.BeeQueenBodyRotationController;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAlwaysLookAtPlayerGoal;
@@ -64,6 +65,7 @@ import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -145,6 +147,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         super.onSyncedDataUpdated(entityDataAccessor);
+    }
+
+    @Override
+    protected BodyRotationControl createBodyControl() {
+        return new BeeQueenBodyRotationController(this);
     }
 
     private void setAnimationState(BeeQueenState pose, BeeQueenState poseToCheckFor, AnimationState animationState) {
@@ -962,16 +969,6 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         Bee bee = EntityType.BEE.create(serverWorld);
         bee.setBaby(true);
         return bee;
-    }
-
-    @Override
-    public int getHeadRotSpeed() {
-        return 1;
-    }
-
-    @Override
-    public int getMaxHeadXRot() {
-        return 90;
     }
 
     public int getThrowCooldown() {
